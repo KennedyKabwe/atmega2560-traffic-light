@@ -120,6 +120,7 @@ The Arduino Mega uses board-level pin labels such as `D11`, while the ATmega2560
 This distinction is important when writing bare-metal code because the firmware interacts with the **ATmega2560 registers and ports**, rather than the Arduino pin abstraction.
 
 A custom pin-mapping reference is included in the `docs/` directory to make this relationship easier to understand.
+[arduino pin refference](docs/ARDUINO PINS ATMEGA2560 PIN MATCH.pdf)
 
 ---
 
