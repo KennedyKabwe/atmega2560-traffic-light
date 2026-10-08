@@ -1,35 +1,94 @@
-# MCU and toolchain settings
-MCU     = atmega2560
-F_CPU   = 16000000UL
-CC      = avr-gcc
+# ==========================================
+# Traffic Light Controller - ATmega2560
+# ==========================================
+
+# MCU
+MCU = atmega2560
+
+# Toolchain
+CC = avr-gcc
 OBJCOPY = avr-objcopy
-CFLAGS  = -mmcu=$(MCU) -DF_CPU=$(F_CPU) -Os -Wall
+AVRDUDE = avrdude
 
-# Project files
-SRC     = src/main.c
-OBJ     = $(SRC:.c=.o)
-TARGET  = traffic.elf
-HEX     = traffic.hex
+# Directories
+SRC_DIR = src
+BUILD_DIR = build
 
+# Project name
+TARGET = traffic_light
+
+# Source files
+SRC = $(SRC_DIR)/main.c
+
+# Output files
+ELF = $(BUILD_DIR)/$(TARGET).elf
+HEX = $(BUILD_DIR)/$(TARGET).hex
+
+# Compiler flags
+CFLAGS = -mmcu=$(MCU) -Os -Wall -Wextra -std=c11
+
+
+# ==========================================
 # Default target
+# ==========================================
+
 all: $(HEX)
 
-# Compile source into object
-%.o: %.c
-    $(CC) $(CFLAGS) -c $< -o $@
 
-# Link objects into ELF
-$(TARGET): $(OBJ)
-    $(CC) $(CFLAGS) $^ -o $@
+# ==========================================
+# Create build directory
+# ==========================================
 
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
+
+
+# ==========================================
+# Compile and link
+# ==========================================
+
+$(ELF): $(SRC) | $(BUILD_DIR)
+	$(CC) $(CFLAGS) -o $@ $<
+
+
+# ==========================================
 # Convert ELF to HEX
-$(HEX): $(TARGET)
-    $(OBJCOPY) -O ihex -R .eeprom $< $@
+# ==========================================
 
-# Flash to board (adjust programmer if needed)
+$(HEX): $(ELF)
+	$(OBJCOPY) -O ihex -R .eeprom $< $@
+
+
+# ==========================================
+# Flash firmware
+# ==========================================
+
 flash: $(HEX)
-    avrdude -p $(MCU) -c usbasp -U flash:w:$(HEX):i
+	$(AVRDUDE) -p $(MCU) -c wiring -P COM6 -b 115200 -D -U flash:w:$(HEX):i
 
-# Clean build artifacts
+
+# ==========================================
+# Clean build files
+# ==========================================
+
 clean:
-    rm -f $(OBJ) $(TARGET) $(HEX)
+	rm -rf $(BUILD_DIR)
+
+
+# ==========================================
+# Help
+# ==========================================
+
+help:
+	@echo "Available targets:"
+	@echo "  make        - Build firmware"
+	@echo "  make flash  - Build and flash firmware"
+	@echo "  make clean  - Remove build files"
+	@echo "  make help  - Show available commands"
+
+
+# ==========================================
+# Phony targets
+# ==========================================
+
+.PHONY: all flash clean help
