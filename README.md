@@ -16,7 +16,7 @@ The project simulates a basic traffic light using three LEDs:
 
 The LEDs are controlled by the ATmega2560 according to a predefined sequence.
 
-The circuit was first tested in **MOKee simulation** and is then reproduced on a physical breadboard using an **Arduino Mega 2560**.
+The circuit was first tested in **WOKWI simulation** and is then reproduced on a physical breadboard using an **Arduino Mega 2560**.
 
 The purpose of this project is to establish a foundation in:
 
@@ -58,9 +58,9 @@ The traffic light operates through a predefined sequence:
 ```text
 RED
  ↓
-GREEN
- ↓
 YELLOW
+ ↓
+GREEN
  ↓
 RED
  ↓
@@ -74,8 +74,8 @@ Only one traffic-light LED is intended to be active at a time.
 | State  | Red | Yellow | Green |
 | ------ | --- | ------ | ----- |
 | RED    | ON  | OFF    | OFF   |
-| GREEN  | OFF | OFF    | ON    |
-| YELLOW | OFF | ON     | OFF   |
+| YELLOW | OFF | OFF    | ON    |
+| GREEN  | OFF | ON     | OFF   |
 
 The sequence repeats continuously.
 
@@ -111,9 +111,9 @@ The project uses the following Arduino Mega digital pins:
 
 | Function   | Arduino Pin | ATmega2560 Port |
 | ---------- | ----------- | --------------- |
-| Red LED    | D11         | PB5             |
+| Red LED    | D11         | PB5            |
 | Yellow LED | D12         | PB6             |
-| Green LED  | D13         | PB7             |
+| Green LED  | D10         | PB4             |
 
 The Arduino Mega uses board-level pin labels such as `D11`, while the ATmega2560 datasheet identifies the corresponding microcontroller pins using AVR port notation such as `PB5`.
 
@@ -325,9 +325,11 @@ Testing is performed in two stages.
 
 ### 13.1 Simulation
 
-The traffic-light circuit was first implemented and tested in **MOKee**.
+The traffic-light circuit was first implemented and tested in **WOKWI**.
 
 The simulation was used to verify the basic logic and expected LED sequence before moving to physical hardware.
+
+![alt text](docs\images\wokwi_ledlight.png)
 
 ### 13.2 Physical Hardware
 
@@ -400,9 +402,9 @@ One of the initial challenges was understanding the relationship between the **A
 For example:
 
 ```text
+Arduino Mega D10 → ATmega2560 PB4
 Arduino Mega D11 → ATmega2560 PB5
 Arduino Mega D12 → ATmega2560 PB6
-Arduino Mega D13 → ATmega2560 PB7
 ```
 
 The custom reference document in `docs/ATmega2560_Pin_Mapping.pdf` was created to make this relationship easier to identify during development.
@@ -419,13 +421,9 @@ Other challenges encountered during development may include:
 * `avrdude` communication problems
 * Incorrect COM port selection
 
-Additional problems and their solutions can be documented here as the project develops.
-
 ---
 
 ## 16. What I Learned
-
-This section will be updated as the project is completed.
 
 Key concepts introduced by this project include:
 
@@ -445,7 +443,7 @@ Key concepts introduced by this project include:
 
 ## 17. Future Improvements
 
-Possible future versions could introduce concepts progressively.
+Possible future versions will introduce concepts progressively.
 
 ### Version 2
 
