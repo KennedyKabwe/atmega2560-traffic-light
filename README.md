@@ -329,7 +329,7 @@ The traffic-light circuit was first implemented and tested in **WOKWI**.
 
 The simulation was used to verify the basic logic and expected LED sequence before moving to physical hardware.
 
-![alt text](docs\images\wokwi_ledlight.png)
+![wokwi project simulation](docs/images/wokwi_ledlight.png)
 
 ### 13.2 Physical Hardware
 
