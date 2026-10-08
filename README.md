@@ -333,13 +333,15 @@ The simulation was used to verify the basic logic and expected LED sequence befo
 
 ### 13.2 Physical Hardware
 
-The same concept is reproduced using:
+The same concept is reproduced using:s
 
 * Arduino Mega 2560
 * ATmega2560
 * Three LEDs
 * Current-limiting resistors
 * Breadboard
+
+![physical project set-up](docs/images/physical_ledlight.jpeg)
 
 The physical implementation verifies that the firmware correctly controls the selected GPIO pins.
 
